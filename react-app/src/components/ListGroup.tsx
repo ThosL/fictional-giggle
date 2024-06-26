@@ -1,17 +1,15 @@
 import { useState } from "react";
 
+interface ListGroupProps {
+    items: string[],
+    heading: string,
+    onSelectItem: (item: string) => void;
 
-function ListGroup() {
-    let items = [
-        'New York',
-        'Kansas City',
-        'Oklahoma City',
-        'Baltimore',
-        'St. Louis',
-        'Niotaze'
-    ];
+}
+function ListGroup({ items, heading, onSelectItem }: ListGroupProps) {
+
     /*this is a hook to allow us to tap into built-in function in react */
-    const [selectedIndex,setSelectedIndex] = useState(-1);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
     /*arr[0] //selected index variable
     arr[1] //updater function
 */
@@ -22,14 +20,17 @@ function ListGroup() {
     return (
         <>
             {getMessage()}
-            <h1>List</h1>
+            <h1>{heading}</h1>
             <ul className="list-group ">
                 {items.map((item, index) =>
-                    <li 
-                        key={item} 
-                        onClick={ ()  => {setSelectedIndex(index);}} 
-                        className={ selectedIndex === index ? "list-group-item active": "list-group-item" }>
-                            {item}
+                    <li
+                        key={item}
+                        onClick={() => {
+                            setSelectedIndex(index);
+                            onSelectItem(item);
+                        }}
+                        className={selectedIndex === index ? "list-group-item active" : "list-group-item"}>
+                        {item}
                     </li>)
                 }
             </ul>
